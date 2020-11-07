@@ -1,1 +1,11 @@
 
+.tooltip {
+    position: fixed;
+}
+
+.column {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    margin-left: 40px;
+}

@@ -5,19 +5,160 @@
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="https://unpkg.com/topojson@3"></script>
+    <script defer src="main.js"></script>
 
 
-
-</head>
-
-
+</head> 
 <body>
+
+    
+        <form>
+            <div class="column">
+                <input type="radio" id="force" name="map" value="force">
+                <label for="force">Force</label>
+            </div>
+            
+            <div class="column">
+                <input type="radio" id="map" name="map" value="map">
+                <label for="map">Map</label><br>
+            </div>
+            
+        </form>
+    </div>
+    
+    
+
+    <div id="chart">
+
+    </div>
+    <div class="tooltip">
+    
+    </div>
+
+
+
 
 
 
 
 
 </body>
+
+
+<!-- <script>
+
+
+    const margin = ({ top: 20, right: 20, bottom: 20, left: 20 })
+    const width = 650 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    const svg = d3.select("#chart").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg
+        .attr("viewBox", [0, 0, width, height]);
+
+
+    d3.json('airports.json', d => {
+        return d3.autoType(d)
+    }).then(data => {
+        // const links = data.links.map(d => Object.create(d));
+        // const nodes = data.nodes.map(d =>data.nodes);
+        const nodes = data.nodes;
+        const links = data.links;
+
+
+        console.log("links: ", links)
+        console.log("nodes: ", nodes)
+
+        //console.log("airports: ", data)
+
+        // const force = d3.forceSimulation(nodes)
+        //     .force("collide", d3.forceCollide().radius(5))
+        //     .force("x", d3.forceX(100))
+        //     .force("y", d3.forceY(100))
+        //     .stop();
+        // console.log("force ", force)
+
+        // const node = svg.append("g")
+        //     .attr("stroke", "#fff")
+        //     .attr("stroke-width", 1.5)
+        //     .selectAll("circle")
+        //     .data(nodes)
+        //     .join("circle")
+        //     .attr("r", 10)
+        //     .attr("fill", "gold")
+
+
+        // node.append("title")
+        //     .text(d=>d.name);
+
+        // force.on("tick", function(){
+        //     link
+        //         .attr("x1", d => d.source.x)
+        //         .attr("y1", d => d.source.y)
+        //         .attr("x2", d => d.target.x)
+        //         .attr("y2", d => d.target.y);
+
+        //     node
+        //         .attr("cx", d => d.x)
+        //         .attr("cy", d => d.y);
+        //     });
+
+
+        const force = d3.forceSimulation(nodes)
+            .force("link", d3.forceLink(links).id(d => d.id))
+            .force("charge", d3.forceManyBody())
+            .force("center", d3.forceCenter(width / 2, height / 2));
+
+
+
+        const link = svg.append("g")
+            .attr("stroke", "#999")
+            .attr("stroke-opacity", 0.6)
+            .selectAll("line")
+            .data(links)
+            .join("line")
+            .attr("stroke-width", d => Math.sqrt(d.value));
+
+        const node = svg.append("g")
+            .attr("stroke", "#fff")
+            .attr("stroke-width", 1.5)
+            .selectAll("circle")
+            .data(nodes)
+            .join("circle")
+            .attr("r", 5)
+            .attr("fill", color)
+            .call(drag(simulation));
+
+        node.append("title")
+            .text(d => d.id);
+
+        simulation.on("tick", () => {
+            link
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            node
+                .attr("cx", d => d.x)
+                .attr("cy", d => d.y);
+        });
+
+
+
+
+        console.log("nodes: ", nodes)
+
+    });
+
+</script> -->
+
 
 
 
